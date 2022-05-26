@@ -4,7 +4,7 @@ from django.db import models
 
 
 class User(models.Model):
-    username = models.CharField(max_length=32, blank=True)
+    username = models.CharField(max_length=32, blank=True, default=None)
     first_name = models.CharField(max_length=64, blank=True, verbose_name="Имя")
 
     class Meta:
