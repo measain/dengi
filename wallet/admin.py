@@ -1,17 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
-from .models import Wallet, Transaction, UserWallet
+from .models import Wallet, UserWallet, Invite
+
+
+class InviteInline(admin.TabularInline):
+    model = Invite
+    extra = 0
 
 
 @admin.register(Wallet)
 class WalletAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Transaction)
-class TransAdmin(admin.ModelAdmin):
-    pass
+    inlines = (InviteInline,)
 
 
 @admin.register(UserWallet)
@@ -23,3 +22,8 @@ class UserWalletAdmin(admin.ModelAdmin):
         return (
             super().get_queryset(request).prefetch_related("wallet__users")
         )  # метод оптимизации sql-запроса
+
+
+@admin.register(Invite)
+class InviteAdmin(admin.ModelAdmin):
+    list_display = ("wallet", "uuid")
